@@ -4,19 +4,22 @@ const mongoose = require("mongoose");
 
 const app = express();
 app.use(express.json());
-const authRoutes = require("./routes/authRoutes");
-app.use("/api/auth", authRoutes);
 
+const authRoutes = require("./routes/authRoutes");
+const jobRoutes = require("./routes/jobRoutes");  // Import Job Routes
+
+app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);  // Use Job Routes
 
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
-    .then(() => console.log("✅ MongoDB Connected Successfully!"))
-    .catch(err => console.error("❌ MongoDB Connection Error:", err));
+  .then(() => console.log("✅ MongoDB Connected Successfully"))
+  .catch((err) => console.error("❌ MongoDB Connection Failed", err));
 
 app.get("/", (req, res) => {
-    res.send("Welcome to WorkLink API!");
+  res.send("Welcome to WorkLink API!");
 });
 
 const PORT = process.env.PORT || 5000;

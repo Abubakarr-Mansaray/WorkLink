@@ -6,10 +6,12 @@ const app = express();
 app.use(express.json());
 
 const authRoutes = require("./routes/authRoutes");
-const jobRoutes = require("./routes/jobRoutes");  // Import Job Routes
+const jobRoutes = require("./routes/jobRoutes");
+const applicationRoutes = require("./routes/applicationRoutes"); // ✅ Import Application Routes
 
 app.use("/api/auth", authRoutes);
-app.use("/api/jobs", jobRoutes);  // Use Job Routes
+app.use("/api/jobs", jobRoutes);
+app.use("/api/jobs", applicationRoutes); // ✅ Use Application Routes
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
